@@ -3,7 +3,6 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const axios = require("axios");
 const eventList = require("./eventList");
-var port = process.env.PORT || 1337;
 var app = express();
 
 fToC = (f) =>{
