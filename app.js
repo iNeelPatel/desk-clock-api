@@ -30,7 +30,7 @@ app.get("/getData", async (req, res) => {
   await axios
     .get("http://worldtimeapi.org/api/timezone/Asia/Kolkata")
     .then(function(response) {
-      // console.log(response.data);
+      console.log(response.data);
       resData.dateTime = response.data.utc_datetime;
     })
     .catch(function(error) {
