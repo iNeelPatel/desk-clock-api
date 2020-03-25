@@ -6,9 +6,9 @@ const eventList = require("./eventList");
 var port = process.env.PORT || 1337;
 var app = express();
 
-fToC = (f) =>{
-  return Math.floor((f - 32)*(5/9))
-}
+fToC = f => {
+  return Math.floor((f - 32) * (5 / 9));
+};
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -55,16 +55,18 @@ app.get("/getData", async (req, res) => {
     )
     .then(function(response) {
       resData.temperature = fToC(response.data.currently.temperature);
-      resData.temperatureHigh = fToC(response.data.daily.data[0].temperatureHigh);
+      resData.temperatureHigh = fToC(
+        response.data.daily.data[0].temperatureHigh
+      );
       resData.temperatureLow = fToC(response.data.daily.data[0].temperatureLow);
-      resData.weather= response.data.currently.icon;
+      resData.weather = response.data.currently.icon;
     })
     .catch(function(error) {
       console.log(error);
     });
 
   var t = await new Date(resData.dateTime);
-  
+
   var find = await eventList.find(data => {
     return (
       data.date.day == t.getDate() &&
@@ -72,7 +74,9 @@ app.get("/getData", async (req, res) => {
       data.date.year == t.getFullYear()
     );
   });
-  resData.event = find.name;
+  if (find != null) {
+    resData.event = find.name;
+  }
   res.send(resData);
 });
 
